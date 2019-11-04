@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import  {  Link } from 'react-router-dom';
 
 export default class ExerciseList extends React.Component{
 
@@ -9,6 +9,7 @@ export default class ExerciseList extends React.Component{
         this.state={
             exercise :[]
         }
+        this.deleteExercise = this.deleteExercise.bind(this);
     }
 
 
@@ -21,17 +22,26 @@ export default class ExerciseList extends React.Component{
         })
     }
 
+    deleteExercise(id){
+        axios.delete('http://localhost:5000/exercise/'+id)
+        .then(res=>console.log(res.data));
+
+        this.setState({
+            exercise:this.state.exercise.filter(el=>el._id !== id)
+        })
+    }
+
     render(){
         return(
             <div>
                 <table className="table">
-                    <thead>
+                    <thead className="thead-light">
 
                         <tr>
-                            <th className="t-head">
+                            <th>
                                 ID
                             </th>
-                            <th className="t-head">
+                            <th>
                                 UserName
                             </th>
                             <th>
@@ -42,6 +52,9 @@ export default class ExerciseList extends React.Component{
                             </th>
                             <th>
                                 Date
+                            </th>
+                            <th>
+                                Functions
                             </th>
                         </tr>
 
@@ -75,8 +88,17 @@ export default class ExerciseList extends React.Component{
                                         </td>
                                         <td>
                                             {
-                                                exer.date
+                                                exer.date.substring(0,10)
                                             }
+                                        </td>
+                                        <td>
+                                        
+                                        <Link to={"/edit/"+exer._id}>edit</Link>
+                                         &nbsp;|&nbsp;
+                                          
+                                            <button onClick={()=>this.deleteExercise(exer._id)}>
+                                                Delete
+                                            </button>
                                         </td>
                                        
                                     </tr>

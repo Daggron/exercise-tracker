@@ -72,7 +72,14 @@ export default class CreateExercise extends React.Component{
         }
 
         axios.post('http://localhost:5000/exercise/add',exercise)
-        .then(data => console.log(data.data));
+        .then(data => console.log(data.data))
+        .catch(err=>{
+            console.log(err);
+        })
+
+        alert('Exercise added successfully');
+
+        window.location = '/'
         
     }
 
