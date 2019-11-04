@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const mongoose = require('mongoose');
+const expressSession = require('express-session');
 require('dotenv').config();
 
 
@@ -11,6 +12,7 @@ app.use(express.json());
 const URI = process.env.URI
 
 mongoose.connect(URI,({useCreateIndex:true,useNewUrlParser:true,useUnifiedTopology:true}));
+
 let db = mongoose.connection;
 
 db.once('open',()=>{
@@ -20,6 +22,13 @@ db.once('open',()=>{
 db.on('error',(err)=>{
     console.log(`A trouble just encountered with db ${err}`);
 });
+
+app.use(expressSession({
+    secret:'A keyboard cat',
+    saveUninitialized:true,
+    resave:true
+}));
+
 
 const port = process.env.PORT || 5000
 app.listen(port,()=>{
