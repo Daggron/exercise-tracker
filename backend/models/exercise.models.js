@@ -22,6 +22,6 @@ let exerciseSchema = new mongoose.Schema({
 });
 
 
-let Exercise = mongoose.Model('Exercise',exerciseSchema);
+let Exercise = mongoose.model('Exercise',exerciseSchema);
 
 module.exports = Exercise;

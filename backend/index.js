@@ -29,8 +29,11 @@ app.use(expressSession({
     resave:true
 }));
 
+app.use('/users',require('./routes/users'));
+app.use('/exercise',require('./routes/exercise'));
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5000;
+
 app.listen(port,()=>{
     console.log(`Hey bro i am running on ${port}`);
 })
